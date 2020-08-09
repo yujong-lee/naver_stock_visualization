@@ -64,26 +64,14 @@ request({ url: 'https://finance.naver.com/sise/sise_quant.nhn', encoding: null }
 			}
 			
 			else if(j == 7) {		
-				updown = td_data[1].attribs.alt;
-				let data;
+				let data = 0;
 				
 				if(td_data[2].children != undefined) {
 					data = parseInt(td_data[2].children[0].data.replace(/[\n\t,]/g,''));
 				}
 
-				if (updown === '상승') {
-					change_inValue = data;
-				}
-				
-				else if (updown === '하락') {
-					change_inValue = -data;
-				}
-				
-				else {
-					updown = '오류';
-					change_inValue = 0;
-					
-				}
+				change_inValue = data;
+
 			}
 			
 			else if(j == 9) {
@@ -97,6 +85,18 @@ request({ url: 'https://finance.naver.com/sise/sise_quant.nhn', encoding: null }
 					change_inPercent = parseInt(change_inPercent.replace(/,/g,''));
 				}
 				
+				if(change_inPercent < 0) {
+					updown = '하락';
+					change_inValue = -change_inValue
+				}
+				else if(change_inPercent > 0) {
+					updown = '상승';
+					change_inValue = change_inValue
+				}
+				else {
+					updown = '그대로';
+					change_inValue = 0;
+				}				
 				const temp = new Stock(
 					name, rank, price, change_inValue, change_inPercent, updown);
 				
