@@ -3,7 +3,7 @@ void setup() {
 }
 
 void draw() {
-  Table table = loadTable("test.csv", "header, csv");
+  Table table = loadTable("2020_08_08_14_05.csv", "header, csv");
   background(255);
   for(int i = 0; i < 100; ++i) {;
     TableRow row = table.getRow(i);
